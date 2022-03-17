@@ -4,13 +4,15 @@
         <h1>Hava Durumu</h1>
         <div>Sicaklik Degerleri</div>
         <city-information
-            :city="selectedCity"
-            :temperature="temperature">
+            :city="name"
+            :temperature="temperature"
+            @click="goToCityUrl">
         </city-information>
     </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 import CityInformation from './CityInformation';
 import Cities from './Cities';
 
@@ -22,32 +24,40 @@ export default {
         Cities
     },
 
-    data() {
-        return {
-            selectedCity: 'istanbul',
-            temperature: '26 C'
-        };
+    mounted() {
+        this.sendRequest();
+    },
+
+    computed: {
+      ...mapState([
+          'name',
+          'temperature'
+      ])
     },
 
     watch: {
-        selectedCity() {
+        name() {
             this.sendRequest();
         }
     },
 
     methods: {
-        changeCity(city) {
-            this.selectedCity = city;
-        },
+        ...mapMutations([
+            'changeCity',
+            'setCityInformation'
+        ]),
         sendRequest() {
             this.axios
-                .get(`${ENDPOINT}&q=${this.selectedCity}`)
+                .get(`${ENDPOINT}&q=${this.name}`)
                 .then(response => this.handleRequest(response))
         },
         handleRequest(request) {
-            const {data: {current: {temp_c}}} = request;
+            const {data: { current }} = request;
 
-            this.temperature = `${temp_c} C`;
+            this.setCityInformation(current);
+        },
+        goToCityUrl() {
+            this.$router.push({ path: this.name });
         }
     }
 }

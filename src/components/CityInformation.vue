@@ -6,7 +6,7 @@
         <b-button
             variant="outline-primary"
             class="mt-3"
-            @click="changeUrl">
+            @click="$emit('click')">
             Go To Details
         </b-button>
     </div>
@@ -21,13 +21,8 @@ export default {
             required: true
         },
         temperature: {
-            type: String,
+            type: Number,
             required: true
-        }
-    },
-    methods: {
-        changeUrl() {
-            this.$router.push({ path: this.city })
         }
     }
 }
