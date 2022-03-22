@@ -8,6 +8,7 @@
             :temperature="temperature"
             @click="goToCityUrl">
         </city-information>
+        <button @click="showToaster">show toaster</button>
     </div>
 </template>
 
@@ -21,7 +22,7 @@ const ENDPOINT = 'http://api.weatherapi.com/v1/current.json?key=0c4a819b394e4092
 export default {
     components: {
         CityInformation,
-        Cities
+        Cities,
     },
 
     mounted() {
@@ -58,6 +59,14 @@ export default {
         },
         goToCityUrl() {
             this.$router.push({ path: this.name });
+        },
+        showToaster() {
+            this.$toaster.open({
+                id: 'test',
+                message: 'Test from main page',
+                visibility: true,
+                type: 'alert'
+            });
         }
     }
 }

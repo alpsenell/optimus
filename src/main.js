@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 import CityDetail from "./components/CityDetails";
 import MainPage from "./components/MainPage";
 import MyHeader from "./components/MyHeader";
+import Toaster from "./components/Toaster";
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -29,6 +30,7 @@ const router = new VueRouter({
 
 Vue.config.productionTip = false
 Vue.prototype.axios = axios;
+Vue.prototype.$toaster = new Vue(Toaster).$mount();
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
